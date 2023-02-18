@@ -1,0 +1,53 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+load("C:/Users/Sergio/Desktop/salida_ps.mac");
+muestras;
+pesos;
+n;
+m;
+s;
+num_graficas;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rowA:1$ rowB:1$
+for i:1 thru s do(
+ if(muestras[i][n+1]=-1) then (
+ muestrasA[rowA]:muestras[i],
+ rowA:rowA+1
+ )
+ else (
+ muestrasB[rowB]:muestras[i],
+ rowB:rowB+1
+ )
+)$
+muestrasA:makelist(muestrasA[i],i,1,rowA-1);
+muestrasB:makelist(muestrasB[i],i,1,rowB-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+if(n=2) then (
+ pot(x1,x2,w1,w2,u):=w1*x1+w2*x2-u
+)
+else print("La gráfica no está en 2D")$
+if(n=2) then (
+ with_slider_draw(
+ t,makelist(i,i,0,num_graficas-1),
+ proportional_axes=xy,
+ point_type=asterisk,
+ color=blue,
+ points(muestrasA),
+ point_type=circle,
+ color=green,
+ points(muestrasB),
+ color=red,
+ implicit(pot(x,y,pesos[3*t+1],pesos[3*t+2],pesos[3*t+3])=0,
+ x,-4,4,y,-4,4)
+ )
+);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
